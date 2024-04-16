@@ -7,6 +7,8 @@ import { User } from '../models/user.model';
     providedIn: 'root',
 })
 export class AuthService {
+    constructor() {}
+
     private baseUrl = 'https://gruposjaveriana.dynaco.co/grupo-1-1/user/login'; // Define la URL base para el login
 
     login(email: string, password: string): Promise<User> {
