@@ -3,18 +3,29 @@ import axios, { AxiosResponse } from 'axios';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Property } from '../models/property.model';
+import { municipality } from '../models/municipality.model';
 
 @Injectable({
     providedIn: 'root',
 })
 export class PropertyService {
-    private apiUrl = 'https://gruposjaveriana.dynaco.co/grupo-1-1';
 
     constructor() {}
 
+    private apiUrl = 'https://gruposjaveriana.dynaco.co/grupo-1-1';
+
+
+    getMunicipalities(): Promise<municipality[]> {
+        return axios.get<municipality[]>(this.apiUrl + "/municipality").then((response) => response.data);
+    }
+
+    
+
+
+
     // Crear una nueva propiedad
     createProperty(property: Property): Observable<Property> {
-        return from(axios.post<Property>(this.apiUrl, property)).pipe(
+        return from(axios.post<Property>(this.apiUrl + "/property", property)).pipe(
             map((response: AxiosResponse<Property>) => response.data)
         );
     }
