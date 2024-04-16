@@ -2,8 +2,6 @@ import { Component, NgModule } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './templates/header/header.component';
 import { FooterComponent } from './templates/footer/footer.component';
-import { NgClass } from '@angular/common';
-
 @Component({
     selector: 'app-root',
     standalone: true,
