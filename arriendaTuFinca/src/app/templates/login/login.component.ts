@@ -23,9 +23,10 @@ export class LoginComponent {
     login(){
         // Llamar al servicio de login con el email y contraseña ingresados
         this.authService.login(this.email, this.password).then(response => {
+            window.sessionStorage.setItem('token', response.id);
             window.location.href = '/newProperty';
         }, error => {
-            console.error(error);
+            alert(error);
         }   
         )
     }

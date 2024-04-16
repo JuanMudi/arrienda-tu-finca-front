@@ -27,7 +27,8 @@ export class SignUpComponent {
   signUp() {
     // Llamar al servicio de signUp con los datos ingresados
     this.authService.signUp(this.user).then(response => {
-      window.location.href = '/login';
+      window.sessionStorage.setItem('token', response.id);
+      window.location.href = '/activation';
     }, error => {
       console.error(error);
     })

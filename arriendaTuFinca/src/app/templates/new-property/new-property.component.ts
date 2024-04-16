@@ -26,7 +26,7 @@ export class NewPropertyComponent implements OnInit {
         pool: false,
         bbq: false,
         pricePerNight: 0,
-        ownerID: '',
+        ownerID: window.sessionStorage.getItem('token') || '',
         municipalityID: ''
     }
 
@@ -35,6 +35,10 @@ export class NewPropertyComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        if(window.sessionStorage.getItem('token') === null) {
+            window.location.href = '/login';
+        
+        }
         this.municipalities = this.propertyService.getMunicipalities()
     }
 
