@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './properties.component.html',
   styleUrl: './properties.component.css'
 })
+
 export class PropertiesComponent {
   properties!: Property[]// Declara una propiedad para almacenar las propiedades obtenidas
 
