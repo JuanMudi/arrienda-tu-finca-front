@@ -25,9 +25,18 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"              
+              "src/styles.css",
+              "src/app/templates/assets/bootstrap/css/bootstrap.min.css",
+              "src/app/templates/assets/css/Inter.css",
+              "src/app/templates/assets/css/aos.min.css"           
             ],
-            "scripts": [],
+            "scripts": [
+              "src/app/templates/assets/bootstrap/js/bootstrap.min.js",
+              "src/app/templates/assets/js/aos.min.js",
+              "src/app/templates/assets/js/bs-init.js",
+              "src/app/templates/assets/js/bold-and-dark.js"
+
+            ],
             "server": "src/main.server.ts",
             "prerender": true,
             "ssr": {

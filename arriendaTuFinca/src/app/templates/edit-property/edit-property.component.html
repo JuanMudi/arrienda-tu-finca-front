@@ -1,1 +1,75 @@
-<p>edit-property works!</p>
+<div class="container mt-5">
+    <h2>Editar Propiedad</h2>
+
+    <!-- Formulario de edición de propiedad -->
+    <form (ngSubmit)="updateProperty()">
+        <!-- Campo de nombre -->
+        <div class="form-group">
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" [(ngModel)]="property.name" name="name" class="form-control" required />
+        </div>
+
+        <!-- Campo de departamento/municipio -->
+        <div class="form-group">
+            <label for="municipality">Departamento/Municipio:</label>
+            <input type="text" id="municipality" [(ngModel)]="property.municipalityID" name="municipality" class="form-control" required />
+        </div>
+
+        <!-- Campo de tipo de ingreso -->
+        <div class="form-group">
+            <label for="accessType">Tipo de ingreso:</label>
+            <select id="accessType" [(ngModel)]="property.accessType" name="accessType" class="form-control">
+                <option value="municipio">Municipio</option>
+                <option value="carreteraPrincipal">Carretera Principal</option>
+                <option value="carreteraSecundaria">Carretera Secundaria</option>
+                <option value="carreteraTerciaria">Carretera Terciaria</option>
+            </select>
+        </div>
+
+        <!-- Campo de descripción -->
+        <div class="form-group">
+            <label for="description">Descripción:</label>
+            <textarea id="description" [(ngModel)]="property.description" name="description" class="form-control" required></textarea>
+        </div>
+
+        <!-- Campo de cantidad de habitaciones -->
+        <div class="form-group">
+            <label for="rooms">Cantidad de habitaciones:</label>
+            <input type="number" id="rooms" [(ngModel)]="property.rooms" name="rooms" class="form-control" min="1" required />
+        </div>
+
+        <!-- Campo de cantidad de baños -->
+        <div class="form-group">
+            <label for="bathrooms">Cantidad de baños:</label>
+            <input type="number" id="bathrooms" [(ngModel)]="property.bathrooms" name="bathrooms" class="form-control" min="1" required />
+        </div>
+
+        <!-- Campo de permitir mascotas -->
+        <div class="form-group">
+            <label for="petFriendly">Permite mascotas:</label>
+            <input type="checkbox" id="petFriendly" [(ngModel)]="property.petFriendly" name="petFriendly" class="form-check-input" />
+        </div>
+
+        <!-- Campo de piscina -->
+        <div class="form-group">
+            <label for="pool">Tiene piscina:</label>
+            <input type="checkbox" id="pool" [(ngModel)]="property.pool" name="pool" class="form-check-input" />
+        </div>
+
+        <!-- Campo de asador -->
+        <div class="form-group">
+            <label for="bbq">Tiene asador:</label>
+            <input type="checkbox" id="bbq" [(ngModel)]="property.bbq" name="bbq" class="form-check-input" />
+        </div>
+
+        <!-- Campo de valor por noche -->
+        <div class="form-group">
+            <label for="pricePerNight">Valor por noche:</label>
+            <input type="number" id="pricePerNight" [(ngModel)]="property.pricePerNight" name="pricePerNight" class="form-control" min="0" />
+        </div>
+
+        <!-- Botón de enviar -->
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </form>
+</div>
+
