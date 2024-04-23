@@ -21,8 +21,6 @@ export class PropertyService {
 
     
 
-
-
     // Crear una nueva propiedad
     createProperty(property: Property): Observable<Property> {
         return from(axios.post<Property>(this.apiUrl + "/property", property)).pipe(

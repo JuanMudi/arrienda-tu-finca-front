@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Property } from '../../models/property.model';
-import { PropertiesService } from '../../services/properties.service';
+import { PropertyService } from '../../services/new-property.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -27,7 +27,7 @@ export class EditPropertyComponent implements OnInit {
     pricePerNight: 0
   };
 
-  constructor(private route: ActivatedRoute, private propertiesService: PropertiesService) { }
+  constructor(private route: ActivatedRoute, private propertyService: PropertyService) { }
 
   ngOnInit(): void {
     this.getProperty();
@@ -35,7 +35,7 @@ export class EditPropertyComponent implements OnInit {
 
   getProperty(): void {
     const id = sessionStorage.getItem('propertyID');
-    this.propertiesService.getProperty(id!!).subscribe(
+    this.propertyService.getPropertyById(id!!).subscribe(
       property => {
         this.property = property;
       },
@@ -46,7 +46,7 @@ export class EditPropertyComponent implements OnInit {
   }
 
   updateProperty(): void {
-    this.propertiesService.updateProperty(this.property).subscribe(
+    this.propertyService.updateProperty(this.property.id!!, this.property).subscribe(
       () => {
         // Navegar a la página de detalles de la propiedad o a otra página relevante
       },

@@ -20,18 +20,18 @@ export class SignUpComponent {
     password: ''
   });
 
-  constructor(private authService: AuthService) { }
+    constructor(private authService: AuthService) { }
 
 
 
-  signUp() {
-    // Llamar al servicio de signUp con los datos ingresados
-    this.authService.signUp(this.user).then(response => {
-      window.sessionStorage.setItem('token', response.id);
-      window.location.href = '/activation';
-    }, error => {
-      console.error(error);
-    })
+    signUp() {
+      // Llamar al servicio de signUp con los datos ingresados
+      this.authService.signUp(this.user).toPromise().then(response => {
+        window.sessionStorage.setItem('token', response!!.id);
+        window.location.href = '/activation';
+      }, error => {
+        console.error(error);
+      })
 
-}
+  }
 }

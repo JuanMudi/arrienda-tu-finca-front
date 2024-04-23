@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PropertiesService } from './properties.service';
+import { AuthGuardService } from './auth-guard.service';
 
-describe('PropertiesService', () => {
-  let service: PropertiesService;
+describe('AuthGuardService', () => {
+  let service: AuthGuardService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(PropertiesService);
+    service = TestBed.inject(AuthGuardService);
   });
 
   it('should be created', () => {

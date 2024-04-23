@@ -6,16 +6,16 @@ import { AccountActivationComponent } from './templates/account-activation/accou
 import { EditPropertyComponent } from './templates/edit-property/edit-property.component';
 import { PropertyDetailsComponent } from './templates/property-details/property-details.component';
 import { PropertiesComponent } from './templates/properties/properties.component';
+import { AuthGuard } from './services/auth-guard.service';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent},
-    {path: 'newProperty', component: NewPropertyComponent},
+    {path: 'newProperty', component: NewPropertyComponent, canActivate: [AuthGuard]},
     {path: 'sign-up', component: SignUpComponent},
     {path: 'activation', component: AccountActivationComponent},
-    {path: 'properties', component: PropertiesComponent},
-    {path: 'edit-property', component: EditPropertyComponent},
-    {path: 'property-details', component: PropertyDetailsComponent},
-    {path: 'edit-property', component: EditPropertyComponent},
+    {path: 'properties', component: PropertiesComponent, canActivate: [AuthGuard]},
+    {path: 'edit-property', component: EditPropertyComponent, canActivate: [AuthGuard]},
+    {path: 'property-details', component: PropertyDetailsComponent, canActivate: [AuthGuard]},
 
 ];

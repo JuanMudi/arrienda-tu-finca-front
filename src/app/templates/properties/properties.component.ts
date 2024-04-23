@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Route } from '@angular/router';
-import { PropertySummary } from '../../models/propertySummary.model';
-import { PropertiesService } from '../../services/properties.service';
+import { Property } from '../../models/property.model';
+import { PropertyService } from '../../services/new-property.service';
 import { CommonModule } from '@angular/common';
 
 
@@ -14,16 +14,16 @@ import { CommonModule } from '@angular/common';
   styleUrl: './properties.component.css'
 })
 export class PropertiesComponent {
-  properties!: PropertySummary[] // Declara una propiedad para almacenar las propiedades obtenidas
+  properties!: Property[]// Declara una propiedad para almacenar las propiedades obtenidas
 
-  constructor(private propertiesService: PropertiesService) { }
+  constructor(private propertyService: PropertyService) { }
 
   ngOnInit(): void {
     this.getProperties() // Llama a la función para obtener las propiedades al inicializar el componente
   }
 
   getProperties(): void {
-    this.propertiesService.getProperties().subscribe(
+    this.propertyService.getProperties().subscribe(
       (data) => {
         this.properties = data; // Asigna las propiedades obtenidas del servicio a la propiedad local
       },
