@@ -4,12 +4,13 @@ import { Route } from '@angular/router';
 import { Property } from '../../models/property.model';
 import { PropertyService } from '../../services/new-property.service';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';  // Importa HttpClientModule
 
 
 @Component({
   selector: 'app-properties',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, HttpClientModule],
   templateUrl: './properties.component.html',
   styleUrl: './properties.component.css'
 })

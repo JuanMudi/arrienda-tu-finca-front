@@ -5,12 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { municipality } from '../../models/municipality.model';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';  // Importa HttpClientModule
 
 @Component({
     standalone: true,
     selector: 'app-create-property',
     templateUrl: './new-property.component.html',
-    imports: [FormsModule, CommonModule],
+    imports: [FormsModule, CommonModule, HttpClientModule],
     styleUrls: ['./new-property.component.css']
 })
 export class NewPropertyComponent implements OnInit {

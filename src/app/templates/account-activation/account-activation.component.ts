@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';  // Importa HttpClientModule
+
 
 @Component({
   selector: 'app-account-activation',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, HttpClientModule],
   templateUrl: './account-activation.component.html',
   styleUrl: './account-activation.component.css'
 })

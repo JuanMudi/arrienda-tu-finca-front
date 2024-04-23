@@ -3,12 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { Property } from '../../models/property.model';
 import { PropertyService } from '../../services/new-property.service';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';  // Importa HttpClientModule
 
 @Component({
   selector: 'app-edit-property',
   templateUrl: './edit-property.component.html',
   styleUrls: ['./edit-property.component.css'],
-  imports: [FormsModule],
+  imports: [FormsModule, HttpClientModule],
   standalone: true
 })
 export class EditPropertyComponent implements OnInit {
