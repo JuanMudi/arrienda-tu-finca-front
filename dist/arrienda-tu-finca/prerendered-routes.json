@@ -1,0 +1,11 @@
+{
+  "routes": [
+    "/activation",
+    "/edit-property",
+    "/login",
+    "/newProperty",
+    "/properties",
+    "/property-details",
+    "/sign-up"
+  ]
+}
