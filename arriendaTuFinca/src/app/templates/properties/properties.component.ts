@@ -3,11 +3,13 @@ import { FormsModule } from '@angular/forms';
 import { Route } from '@angular/router';
 import { PropertySummary } from '../../models/propertySummary.model';
 import { PropertiesService } from '../../services/properties.service';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-properties',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './properties.component.html',
   styleUrl: './properties.component.css'
 })
