@@ -1,20 +1,34 @@
 <div class="container mt-5">
-  <h2>Mis Propiedades</h2>
-  <div *ngIf="properties && properties.length > 0">
+    <h2>Mis Propiedades</h2>
+    <div *ngIf="properties && properties.length > 0">
       <div class="row">
-          <div class="col-md-4" *ngFor="let property of properties">
-              <div class="card mb-3">
-                  <div class="card-body">
-                      <h5 class="card-title">{{ property.name }}</h5>
-                      <p class="card-text">Municipio: {{ getMunicipality(property.municipalityID) }}</p>
-                      <a class="btn btn-primary" onclick='editProperty(property.id)'>Editar</a>
-                      <a class="btn btn-secondary">Ver Detalles</a>
-                  </div>
-              </div>
+        <div class="col-md-4" *ngFor="let property of properties">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">{{ property.name }}</h5>
+              <p class="card-text">
+                Departamento: 
+                <ng-container *ngIf="(getDepartment(property.municipalityID) | async) as department">
+                  {{ department }}
+                </ng-container>
+                <ng-template #loadingDepartment>Loading...</ng-template>
+              </p>
+              <p class="card-text">
+                Municipio: 
+                <ng-container *ngIf="(getMunicipality(property.municipalityID) | async) as municipality; else loadingMunicipality">
+                  {{ municipality }}
+                </ng-container>
+                <ng-template #loadingMunicipality>Loading...</ng-template>
+              </p>
+              <a class="btn btn-primary" (click)="editProperty(property.id!!)">Editar</a>
+              <a class="btn btn-secondary">Ver Detalles</a>
+            </div>
           </div>
+        </div>
       </div>
-  </div>
-  <div *ngIf="properties && properties.length === 0">
+    </div>
+    <div *ngIf="properties && properties.length === 0">
       <p>No tienes propiedades asociadas.</p>
+    </div>
   </div>
-</div>
+  

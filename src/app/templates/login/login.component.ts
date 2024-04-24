@@ -25,7 +25,7 @@ export class LoginComponent {
 
     login() {
         this.authService.login(this.email, this.password).toPromise().then(response => {
-            window.sessionStorage.setItem('token', response!!.id);
+            sessionStorage.setItem('token', response!!.id);
             this.router.navigate(['/newProperty']); // Uso de Angular Router para la redirección
         }).catch(error => {
             this.errorMessage = error.message; // Manejo de error con mensaje más descriptivo

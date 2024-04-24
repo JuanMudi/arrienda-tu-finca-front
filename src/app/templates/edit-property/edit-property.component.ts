@@ -2,15 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Property } from '../../models/property.model';
 import { PropertyService } from '../../services/new-property.service';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';  // Importa HttpClientModule
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'; // Importa FormBuilder y Validators
+import { Department } from '../../models/department.model';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Municipality } from '../../models/municipality.model';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-property',
   templateUrl: './edit-property.component.html',
   styleUrls: ['./edit-property.component.css'],
-  imports: [FormsModule, HttpClientModule],
-  standalone: true
+  standalone  : true,
+  imports: [ReactiveFormsModule]
 })
 export class EditPropertyComponent implements OnInit {
   property: Property = {
@@ -27,11 +30,24 @@ export class EditPropertyComponent implements OnInit {
     ownerID: '',
     pricePerNight: 0
   };
+  departments!: Observable<Department[]>; // Ahora es Observable<Department[]>
+  municipalities = new BehaviorSubject<Municipality[]>([]);
+  selectedDepartment: string = ''; // ID del departamento seleccionado
+  propertyForm!: FormGroup; // Declara una propiedad para el formulario
 
-  constructor(private route: ActivatedRoute, private propertyService: PropertyService) { }
+  constructor(private route: ActivatedRoute, private propertyService: PropertyService, private formBuilder: FormBuilder) { // Agrega FormBuilder al constructor
+    this.initForm(); // Inicializa el formulario en el constructor
+  }
 
   ngOnInit(): void {
     this.getProperty();
+  }
+
+  initForm(): void {
+    this.propertyForm = this.formBuilder.group({
+      name: [this.property.name, Validators.required], // Añade validadores si es necesario
+      // Agrega los demás campos del formulario con sus valores iniciales y validadores si es necesario
+    });
   }
 
   getProperty(): void {
@@ -39,6 +55,11 @@ export class EditPropertyComponent implements OnInit {
     this.propertyService.getPropertyById(id!!).subscribe(
       property => {
         this.property = property;
+        // Actualiza los valores del formulario cuando se obtiene la propiedad
+        this.propertyForm.patchValue({
+          name: property.name,
+          // Actualiza los demás campos del formulario según la propiedad obtenida
+        });
       },
       error => {
         console.error('Error al obtener la propiedad:', error);
@@ -47,13 +68,18 @@ export class EditPropertyComponent implements OnInit {
   }
 
   updateProperty(): void {
-    this.propertyService.updateProperty(this.property.id!!, this.property).subscribe(
-      () => {
-        // Navegar a la página de detalles de la propiedad o a otra página relevante
-      },
-      error => {
-        console.error('Error al actualizar la propiedad:', error);
-      }
-    );
+    // Lógica para actualizar la propiedad
   }
+
+  onDepartmentChange() {
+    this.departments.subscribe(departments => {
+      const foundDept = departments.find(d => d.id === this.selectedDepartment);
+      if (foundDept) {
+        this.municipalities.next(foundDept.municipalities);
+      } else {
+        this.municipalities.next([]);
+      }
+    });
+  }
+
 }

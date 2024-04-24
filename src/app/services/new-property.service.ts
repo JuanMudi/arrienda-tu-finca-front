@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Property } from '../models/property.model';
 import { Department } from '../models/department.model'; // Asegúrate de que el path sea correcto
 import { response } from 'express';
+import { Location } from '../models/location.model';
+
 
 
 @Injectable({
@@ -25,19 +27,12 @@ export class PropertyService {
         );
     }
 
-    getMunicipalityById(municipalityId: string): Observable<any> {
-        // Haz la llamada a la API para obtener el municipio por ID
-        return new Observable<any>((observer) => {
-          axios.get(`${this.apiUrl}/municipality/${municipalityId}`)
-            .then((response) => {
-              observer.next(response.data);
-              observer.complete();
-            })
-            .catch((error) => {
-              observer.error(error);
-            });
-        });
-      }
+    getMunicipalityById(municipalityId: string): Observable<Location> {
+        return from(axios.get<Location>(`${this.apiUrl}/municipality/${municipalityId}`)).pipe(
+            map(response => response.data)
+        );
+    }
+        
 
 
     // Crear una nueva propiedad

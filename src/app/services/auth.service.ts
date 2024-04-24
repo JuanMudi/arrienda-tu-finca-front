@@ -10,9 +10,13 @@ import { Observable } from 'rxjs';
 })
 
 export class AuthService {
+    
     private baseUrl = 'https://gruposjaveriana.dynaco.co/grupo-1-1/user'; // URL base
+    isLoggedIn = false;
+  
 
     constructor(private http: HttpClient) { }
+    
 
     login(email: string, password: string): Observable<User> {
         console.log("Uwunt")
@@ -23,7 +27,11 @@ export class AuthService {
         return this.http.post<User>(this.baseUrl, user);
     }
 
-    isAuthenticated(): boolean {
-        return !!window.sessionStorage.getItem('token');
+    isAuthenticated(): any {
+        try{
+        return sessionStorage.getItem('token');
+        } catch (error) {
+            return null;
+        }
     }
 }
