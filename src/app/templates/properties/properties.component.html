@@ -1,21 +1,20 @@
 <div class="container mt-5">
-    <h2>Mis Propiedades</h2>
-    <div *ngIf="properties && properties.length > 0">
+  <h2>Mis Propiedades</h2>
+  <div *ngIf="properties && properties.length > 0">
       <div class="row">
-        <div class="col-md-4" *ngFor="let property of properties">
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">{{ property.name }}</h5>
-              <p class="card-text">Municipio: {{ property.municipalityID }}</p>
-              <a  class="btn btn-primary">Editar</a>
-              <a  class="btn btn-secondary">Ver Detalles</a>
-            </div>
+          <div class="col-md-4" *ngFor="let property of properties">
+              <div class="card mb-3">
+                  <div class="card-body">
+                      <h5 class="card-title">{{ property.name }}</h5>
+                      <p class="card-text">Municipio: {{ getMunicipality(property.municipalityID) }}</p>
+                      <a class="btn btn-primary" onclick="editProperty(property.id)">Editar</a>
+                      <a class="btn btn-secondary">Ver Detalles</a>
+                  </div>
+              </div>
           </div>
-        </div>
       </div>
-    </div>
-    <div *ngIf="properties && properties.length === 0">
-      <p>No tienes propiedades asociadas.</p>
-    </div>
   </div>
-  
+  <div *ngIf="properties && properties.length === 0">
+      <p>No tienes propiedades asociadas.</p>
+  </div>
+</div>

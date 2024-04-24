@@ -1,5 +1,5 @@
 <!-- Create Property Form -->
-<form (ngSubmit)="createProperty()">
+<form (ngSubmit)="createProperty()" #propertyForm="ngForm">
     <div>
         <h2>Crear Propiedad</h2>
 
@@ -7,18 +7,38 @@
         <div>
             <label for="name">Nombre (obligatorio):</label>
             <input type="text" id="name" [(ngModel)]="property.name" name="name" required />
+            <!-- Mensaje de error -->
+            <div *ngIf="propertyForm.submitted && !property.name" class="error-message">
+                Debes ingresar un nombre.
+            </div>
         </div>
 
-        <!-- Campo de departamento/municipio -->
+        <!-- Campo de departamento -->
         <div>
-            <label for="municipality">Departamento/Municipio (obligatorio):</label>
+            <label for="department">Departamento (obligatorio):</label>
+            <select id="department" [(ngModel)]="selectedDepartment" name="department" required (change)="onDepartmentChange()">
+                <option *ngFor="let department of departments | async" [value]="department.id">
+                    {{ department.name }}
+                </option>
+            </select>
+            <!-- Mensaje de error -->
+            <div *ngIf="propertyForm.submitted && !selectedDepartment" class="error-message">
+                Debes seleccionar un departamento.
+            </div>
+        </div>
+
+        <!-- Campo de municipio -->
+        <div>
+            <label for="municipality">Municipio (obligatorio):</label>
             <select id="municipality" [(ngModel)]="property.municipalityID" name="municipality" required>
-                <!-- Opciones de municipio/departmento llenadas desde el componente -->
                 <option *ngFor="let municipality of municipalities | async" [value]="municipality.id">
                     {{ municipality.name }}
                 </option>
             </select>
-            
+            <!-- Mensaje de error -->
+            <div *ngIf="propertyForm.submitted && !property.municipalityID" class="error-message">
+                Debes seleccionar un municipio.
+            </div>
         </div>
 
         <!-- Campo de tipo de ingreso -->
@@ -35,35 +55,47 @@
         <div>
             <label for="description">Descripción (obligatorio):</label>
             <textarea id="description" [(ngModel)]="property.description" name="description" required></textarea>
+            <!-- Mensaje de error -->
+            <div *ngIf="propertyForm.submitted && !property.description" class="error-message">
+                Debes ingresar una descripción.
+            </div>
         </div>
 
         <!-- Campo de cantidad de habitaciones -->
         <div>
             <label for="rooms">Cantidad de habitaciones (obligatorio):</label>
             <input type="number" id="rooms" [(ngModel)]="property.rooms" name="rooms" min="1" required />
+            <!-- Mensaje de error -->
+            <div *ngIf="propertyForm.submitted && !property.rooms" class="error-message">
+                Debes ingresar la cantidad de habitaciones.
+            </div>
         </div>
 
         <!-- Campo de cantidad de baños -->
         <div>
             <label for="bathrooms">Cantidad de baños (obligatorio):</label>
             <input type="number" id="bathrooms" [(ngModel)]="property.bathrooms" name="bathrooms" min="1" required />
+            <!-- Mensaje de error -->
+            <div *ngIf="propertyForm.submitted && !property.bathrooms" class="error-message">
+                Debes ingresar la cantidad de baños.
+            </div>
         </div>
 
         <!-- Campo de permitir mascotas -->
         <div>
-            <label for="petFriendly">Permite mascotas (obligatorio):</label>
+            <label for="petFriendly">Permite mascotas:</label>
             <input type="checkbox" id="petFriendly" [(ngModel)]="property.petFriendly" name="petFriendly" />
         </div>
 
         <!-- Campo de piscina -->
         <div>
-            <label for="pool">Tiene piscina (obligatorio):</label>
+            <label for="pool">Tiene piscina:</label>
             <input type="checkbox" id="pool" [(ngModel)]="property.pool" name="pool" />
         </div>
 
         <!-- Campo de asador -->
         <div>
-            <label for="bbq">Tiene asador (obligatorio):</label>
+            <label for="bbq">Tiene asador:</label>
             <input type="checkbox" id="bbq" [(ngModel)]="property.bbq" name="bbq" />
         </div>
 
@@ -82,4 +114,3 @@
         
     </div>
 </form>
-

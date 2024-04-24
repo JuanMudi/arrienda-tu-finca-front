@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {PropertyService} from '../../services/new-property.service';
+import { Observable } from 'rxjs';
+import { PropertyService } from '../../services/new-property.service';
 import { Property } from '../../models/property.model';
 import { FormsModule } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { municipality } from '../../models/municipality.model';
+import { Municipality} from '../../models/municipality.model';
+import { Department } from '../../models/department.model';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';  // Importa HttpClientModule
+import { HttpClientModule } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
     standalone: true,
@@ -15,8 +18,9 @@ import { HttpClientModule } from '@angular/common/http';  // Importa HttpClientM
     styleUrls: ['./new-property.component.css']
 })
 export class NewPropertyComponent implements OnInit {
-
-    municipalities: Promise<municipality[]> = new Promise<municipality[]>(() => []);
+    departments!: Observable<Department[]>; // Ahora es Observable<Department[]>
+    municipalities = new BehaviorSubject<Municipality[]>([]);
+    selectedDepartment: string = ''; // ID del departamento seleccionado
 
     property: Property = {
         name: '',
@@ -29,22 +33,31 @@ export class NewPropertyComponent implements OnInit {
         pricePerNight: 0,
         ownerID: window.sessionStorage.getItem('token') || '',
         municipalityID: ''
-    }
+    };
 
-    constructor(private propertyService: PropertyService) { 
-        this.ngOnInit()
-    }
+    constructor(private propertyService: PropertyService, private router: Router ) { }
 
     ngOnInit(): void {
-        if(window.sessionStorage.getItem('token') === null) {
-            window.location.href = '/login';
-        
-        }
-        this.municipalities = this.propertyService.getMunicipalities()
+        this.departments = this.propertyService.loadDepartments();
     }
 
-    createProperty() {
-        this.propertyService.createProperty(this.property)
+    onDepartmentChange() {
+        this.departments.subscribe(departments => {
+            const foundDept = departments.find(d => d.id === this.selectedDepartment);
+            if (foundDept) {
+                this.municipalities.next(foundDept.municipalities);
+            } else {
+                this.municipalities.next([]);
+            }
+        });
     }
-       
+    
+
+    createProperty() {
+        this.propertyService.createProperty(this.property).subscribe({
+            next: (res) => console.log('Property created!', res),
+            error: (err) => console.error('Error creating property', err)
+        });
+        this.router.navigate(['/properties']); // Uso de Angular Router para la redirección
+    }
 }
