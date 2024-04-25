@@ -6,6 +6,7 @@ import { Property } from '../models/property.model';
 import { Department } from '../models/department.model'; // Asegúrate de que el path sea correcto
 import { response } from 'express';
 import { Location } from '../models/location.model';
+import { shortProperty } from '../models/shortProperty.model';
 
 
 
@@ -49,6 +50,32 @@ export class PropertyService {
         );
     }
 
+     // Obtener todas las propiedades
+     findProperties(municipality: string, name: String): Observable<Property[]> {
+        if(municipality === '' && name === '')
+            {
+                return from(axios.get<Property[]>(`${this.apiUrl}/property`)).pipe(
+                    map(response => response.data)
+                );
+            }
+        if(municipality === '' && name !== '')
+            {
+                return from(axios.get<Property[]>(`${this.apiUrl}/property/find?name=${name}`)).pipe(
+                    map(response => response.data)
+                );
+            }
+        if(municipality !== '' && name === '')
+            {
+                return from(axios.get<Property[]>(`${this.apiUrl}/property/find?municipality=${municipality}`)).pipe(
+                    map(response => response.data)
+                );
+            }
+            
+        return from(axios.get<Property[]>(`${this.apiUrl}/property/find?municipality=${municipality}&name=${name}`)).pipe(
+            map(response => response.data)
+        );
+    }
+
     // Obtener una propiedad por ID
     getPropertyById(id: string): Observable<Property> {
         return from(axios.get<Property>(`${this.apiUrl}/property/${id}`)).pipe(
@@ -64,9 +91,9 @@ export class PropertyService {
     }
 
     // Actualizar una propiedad por ID
-    updateProperty(id: string, property: Property): Observable<Property> {
+    updateProperty(id: string, property: shortProperty) {
         return from(axios.put<Property>(`${this.apiUrl}/property/${id}`, property)).pipe(
-            map(response => response.data)
+            map(response => response.status)
         );
     }
 

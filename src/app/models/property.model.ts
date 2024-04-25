@@ -9,7 +9,8 @@ export class Property {
     bbq: boolean; // Indica si tiene asador (obligatorio)
     pricePerNight: number; // Valor por noche de la propiedad
     ownerID: string; // ID del propietario (debe ser proporcionado por el sistema o usuario)
-    municipalityID: string; // ID del municipio al que pertenece la propiedad (obligatorio)
+    municipalityName: string; // ID del municipio al que pertenece la propiedad (obligatorio)
+    departmentName: string; // ID del departamento al que pertenece la propiedad (obligatorio)
     accessType?: string; // Tipo de acceso (carretera principal, secundaria, terciaria)
 
     constructor(
@@ -23,7 +24,8 @@ export class Property {
         bbq: boolean,
         pricePerNight: number,
         ownerID: string,
-        municipalityID: string,
+        departmentName: string,
+        municipalityName: string,
         accessType?: string
     ) {
         this.id = id;
@@ -36,7 +38,8 @@ export class Property {
         this.bbq = bbq;
         this.pricePerNight = pricePerNight;
         this.ownerID = ownerID;
-        this.municipalityID = municipalityID;
+        this.municipalityName = municipalityName;
+        this.departmentName = departmentName;
         this.accessType = accessType;
     }
 }

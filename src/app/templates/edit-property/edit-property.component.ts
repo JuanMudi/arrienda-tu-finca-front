@@ -2,24 +2,28 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Property } from '../../models/property.model';
 import { PropertyService } from '../../services/new-property.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms'; // Importa FormBuilder y Validators
+import { FormGroup, FormBuilder, Validators, FormsModule } from '@angular/forms'; // Importa FormBuilder y Validators
 import { Department } from '../../models/department.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Municipality } from '../../models/municipality.model';
-import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { shortProperty } from '../../models/shortProperty.model';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-edit-property',
   templateUrl: './edit-property.component.html',
   styleUrls: ['./edit-property.component.css'],
   standalone  : true,
-  imports: [ReactiveFormsModule]
+  imports: [FormsModule, CommonModule]
 })
 export class EditPropertyComponent implements OnInit {
   property: Property = {
     id: '',
     name: '',
-    municipalityID: '',
+    municipalityName: '',
+    departmentName: '',
     accessType: '',
     description: '',
     rooms: 0,
@@ -34,33 +38,37 @@ export class EditPropertyComponent implements OnInit {
   municipalities = new BehaviorSubject<Municipality[]>([]);
   selectedDepartment: string = ''; // ID del departamento seleccionado
   propertyForm!: FormGroup; // Declara una propiedad para el formulario
+  municipalityID: string = '';
 
-  constructor(private route: ActivatedRoute, private propertyService: PropertyService, private formBuilder: FormBuilder) { // Agrega FormBuilder al constructor
-    this.initForm(); // Inicializa el formulario en el constructor
+
+
+  constructor(private route: ActivatedRoute, private propertyService: PropertyService, private formBuilder: FormBuilder, private router: Router) { // Agrega FormBuilder al constructor
   }
 
   ngOnInit(): void {
+    this.departments = this.propertyService.loadDepartments();
     this.getProperty();
-  }
 
-  initForm(): void {
     this.propertyForm = this.formBuilder.group({
-      name: [this.property.name, Validators.required], // Añade validadores si es necesario
-      // Agrega los demás campos del formulario con sus valores iniciales y validadores si es necesario
+      name: [this.property.name, Validators.required],
+      department: [this.property.departmentName, Validators.required],
+      accessType: [this.property.accessType],
+      description: [this.property.description, Validators.required],
+      rooms: [this.property.rooms, Validators.required],
+      bathrooms: [this.property.bathrooms, Validators.required],
+      petFriendly: [this.property.petFriendly],
+      pool: [this.property.pool],
+      bbq: [this.property.bbq],
+      pricePerNight: [this.property.pricePerNight, Validators.required]
     });
-  }
+}
 
   getProperty(): void {
     const id = sessionStorage.getItem('propertyID');
     this.propertyService.getPropertyById(id!!).subscribe(
       property => {
         this.property = property;
-        // Actualiza los valores del formulario cuando se obtiene la propiedad
-        this.propertyForm.patchValue({
-          name: property.name,
-          // Actualiza los demás campos del formulario según la propiedad obtenida
-        });
-      },
+         },
       error => {
         console.error('Error al obtener la propiedad:', error);
       }
@@ -68,18 +76,34 @@ export class EditPropertyComponent implements OnInit {
   }
 
   updateProperty(): void {
-    // Lógica para actualizar la propiedad
+    const id = sessionStorage.getItem('propertyID');
+
+    const pProperty = new shortProperty(this.property, this.municipalityID!!)
+    this.propertyService.updateProperty(id!!,pProperty).subscribe({
+      next: res => {
+
+        if(res === 200){
+        console.log('Propiedad actualizada!', res)
+        this.router.navigate(['/properties']);
+        } else {
+          console.log('Error al actualizar la propiedad', res)
+        }
+      }   
+    })
+  
+
   }
 
   onDepartmentChange() {
     this.departments.subscribe(departments => {
-      const foundDept = departments.find(d => d.id === this.selectedDepartment);
-      if (foundDept) {
-        this.municipalities.next(foundDept.municipalities);
-      } else {
-        this.municipalities.next([]);
-      }
+        const foundDept = departments.find(d => d.id === this.selectedDepartment);
+        console.log('foundDept', foundDept);
+        if (foundDept) {
+            this.municipalities.next(foundDept.municipalities);
+        } else {
+            this.municipalities.next([]);
+        }
     });
-  }
+}
 
 }

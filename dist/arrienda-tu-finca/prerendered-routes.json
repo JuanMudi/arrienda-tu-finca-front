@@ -6,6 +6,8 @@
     "/newProperty",
     "/properties",
     "/property-details",
+    "/property-finder",
+    "/rental-request",
     "/sign-up"
   ]
 }

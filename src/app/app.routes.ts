@@ -7,6 +7,8 @@ import { EditPropertyComponent } from './templates/edit-property/edit-property.c
 import { PropertyDetailsComponent } from './templates/property-details/property-details.component';
 import { PropertiesComponent } from './templates/properties/properties.component';
 import { AuthGuard } from './services/auth-guard.service';
+import { PropertyFinderComponent } from './templates/property-finder/property-finder.component';
+import { RequestRentalComponent } from './templates/request-rental/request-rental.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -17,5 +19,7 @@ export const routes: Routes = [
     {path: 'properties', component: PropertiesComponent, canActivate: [AuthGuard]},
     {path: 'edit-property', component: EditPropertyComponent, canActivate: [AuthGuard]},
     {path: 'property-details', component: PropertyDetailsComponent, canActivate: [AuthGuard]},
+    {path: 'property-finder', component: PropertyFinderComponent, canActivate: [AuthGuard]},
+    {path: 'rental-request', component: RequestRentalComponent, canActivate: [AuthGuard]}
 
 ];

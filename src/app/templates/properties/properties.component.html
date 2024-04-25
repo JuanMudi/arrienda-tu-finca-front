@@ -8,20 +8,19 @@
               <h5 class="card-title">{{ property.name }}</h5>
               <p class="card-text">
                 Departamento: 
-                <ng-container *ngIf="(getDepartment(property.municipalityID) | async) as department">
-                  {{ department }}
+                <ng-container>
+                  {{ property.departmentName }}
                 </ng-container>
-                <ng-template #loadingDepartment>Loading...</ng-template>
               </p>
               <p class="card-text">
                 Municipio: 
-                <ng-container *ngIf="(getMunicipality(property.municipalityID) | async) as municipality; else loadingMunicipality">
-                  {{ municipality }}
+                <ng-container >
+                  {{ property.municipalityName }}
                 </ng-container>
                 <ng-template #loadingMunicipality>Loading...</ng-template>
               </p>
               <a class="btn btn-primary" (click)="editProperty(property.id!!)">Editar</a>
-              <a class="btn btn-secondary">Ver Detalles</a>
+              <a class="btn btn-secondary" (click)="seeProperty(property.id!!)">Ver Detalles</a>
               <a class="btn btn-secondary" (click)="deactivate(property.id!!)">Desactivar</a>
 
             </div>

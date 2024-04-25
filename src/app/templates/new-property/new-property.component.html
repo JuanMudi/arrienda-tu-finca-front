@@ -11,7 +11,7 @@
             <div *ngIf="propertyForm.submitted && !property.name" class="error-message">
                 Debes ingresar un nombre.
             </div>
-        </div>
+        </div>  
 
         <!-- Campo de departamento -->
         <div>
@@ -30,13 +30,13 @@
         <!-- Campo de municipio -->
         <div>
             <label for="municipality">Municipio (obligatorio):</label>
-            <select id="municipality" [(ngModel)]="property.municipalityID" name="municipality" required>
+            <select id="municipality" [(ngModel)]="property.municipalityName" name="municipality" required>
                 <option *ngFor="let municipality of municipalities | async" [value]="municipality.id">
                     {{ municipality.name }}
                 </option>
             </select>
             <!-- Mensaje de error -->
-            <div *ngIf="propertyForm.submitted && !property.municipalityID" class="error-message">
+            <div *ngIf="propertyForm.submitted && !property.municipalityName" class="error-message">
                 Debes seleccionar un municipio.
             </div>
         </div>

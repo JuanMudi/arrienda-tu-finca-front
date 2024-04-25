@@ -1,23 +1,28 @@
-<div class="container mt-5">
-    <h2>Editar Propiedad</h2>
+<!-- Create Property Form -->
+<form (ngSubmit)="updateProperty()" #propertyForm="ngForm">
+    <div>
+        <h2>Editar Propiedad</h2>
 
-    <!-- Formulario de edición de propiedad -->
-    <form [formGroup]="propertyForm" (ngSubmit)="updateProperty()">
         <!-- Campo de nombre -->
-        <div class="form-group">
-            <label for="name">Nombre:</label>
-            <input type="text" id="name" formControlName="name" class="form-control" required />
+        <div>
+            <label for="name">Nombre (obligatorio):</label>
+            <input type="text" id="name" [(ngModel)]="property.name" name="name" required />
+            <!-- Mensaje de error -->
+            <div *ngIf="!property.name" class="error-message">
+                Debes ingresar un nombre.
+            </div>
         </div>
 
+        <!-- Campo de departamento -->
         <div>
             <label for="department">Departamento (obligatorio):</label>
-            <select id="department" formControlName="department" required (change)="onDepartmentChange()">
+            <select id="department" [(ngModel)]="selectedDepartment" name="department" required (change)="onDepartmentChange()">
                 <option *ngFor="let department of departments | async" [value]="department.id">
                     {{ department.name }}
                 </option>
             </select>
             <!-- Mensaje de error -->
-            <div *ngIf="propertyForm.submitted && !propertyForm.get('department').value" class="error-message">
+            <div *ngIf="!selectedDepartment" class="error-message">
                 Debes seleccionar un departamento.
             </div>
         </div>
@@ -25,73 +30,93 @@
         <!-- Campo de municipio -->
         <div>
             <label for="municipality">Municipio (obligatorio):</label>
-            <select id="municipality" formControlName="municipality" required>
+            <select id="municipality" [(ngModel)]="municipalityID" name="municipality" required>
                 <option *ngFor="let municipality of municipalities | async" [value]="municipality.id">
                     {{ municipality.name }}
                 </option>
             </select>
             <!-- Mensaje de error -->
-            <div *ngIf="propertyForm.submitted && !propertyForm.get('municipality').value" class="error-message">
+            <div *ngIf="!property.municipalityName" class="error-message">
                 Debes seleccionar un municipio.
             </div>
         </div>
 
-        <!-- Otros campos del formulario -->
-
         <!-- Campo de tipo de ingreso -->
-        <div class="form-group">
+        <div>
             <label for="accessType">Tipo de ingreso:</label>
-            <select id="accessType" formControlName="accessType" class="form-control">
-                <option value="municipio">Municipio</option>
+            <select id="accessType" [(ngModel)]="property.accessType" name="accessType">
                 <option value="carreteraPrincipal">Carretera Principal</option>
                 <option value="carreteraSecundaria">Carretera Secundaria</option>
                 <option value="carreteraTerciaria">Carretera Terciaria</option>
             </select>
+            <div *ngIf="!property.accessType" class="error-message">
+                Debes seleccionar un tipo de acceso.
+            </div>
         </div>
 
         <!-- Campo de descripción -->
-        <div class="form-group">
-            <label for="description">Descripción:</label>
-            <textarea id="description" formControlName="description" class="form-control" required></textarea>
+        <div>
+            <label for="description">Descripción (obligatorio):</label>
+            <textarea id="description" [(ngModel)]="property.description" name="description" required></textarea>
+            <!-- Mensaje de error -->
+            <div *ngIf="!property.description" class="error-message">
+                Debes ingresar una descripción.
+            </div>
         </div>
 
         <!-- Campo de cantidad de habitaciones -->
-        <div class="form-group">
-            <label for="rooms">Cantidad de habitaciones:</label>
-            <input type="number" id="rooms" formControlName="rooms" class="form-control" min="1" required />
+        <div>
+            <label for="rooms">Cantidad de habitaciones (obligatorio):</label>
+            <input type="number" id="rooms" [(ngModel)]="property.rooms" name="rooms" min="1" required />
+            <!-- Mensaje de error -->
+            <div *ngIf="!property.rooms" class="error-message">
+                Debes ingresar la cantidad de habitaciones.
+            </div>
         </div>
 
         <!-- Campo de cantidad de baños -->
-        <div class="form-group">
-            <label for="bathrooms">Cantidad de baños:</label>
-            <input type="number" id="bathrooms" formControlName="bathrooms" class="form-control" min="1" required />
+        <div>
+            <label for="bathrooms">Cantidad de baños (obligatorio):</label>
+            <input type="number" id="bathrooms" [(ngModel)]="property.bathrooms" name="bathrooms" min="1" required />
+            <!-- Mensaje de error -->
+            <div *ngIf="!property.bathrooms" class="error-message">
+                Debes ingresar la cantidad de baños.
+            </div>
         </div>
 
         <!-- Campo de permitir mascotas -->
-        <div class="form-group">
+        <div>
             <label for="petFriendly">Permite mascotas:</label>
-            <input type="checkbox" id="petFriendly" formControlName="petFriendly" class="form-check-input" />
+            <input type="checkbox" id="petFriendly" [(ngModel)]="property.petFriendly" name="petFriendly" />
         </div>
 
         <!-- Campo de piscina -->
-        <div class="form-group">
+        <div>
             <label for="pool">Tiene piscina:</label>
-            <input type="checkbox" id="pool" formControlName="pool" class="form-check-input" />
+            <input type="checkbox" id="pool" [(ngModel)]="property.pool" name="pool" />
         </div>
 
         <!-- Campo de asador -->
-        <div class="form-group">
+        <div>
             <label for="bbq">Tiene asador:</label>
-            <input type="checkbox" id="bbq" formControlName="bbq" class="form-check-input" />
+            <input type="checkbox" id="bbq" [(ngModel)]="property.bbq" name="bbq" />
         </div>
 
         <!-- Campo de valor por noche -->
-        <div class="form-group">
+        <div>
             <label for="pricePerNight">Valor por noche:</label>
-            <input type="number" id="pricePerNight" formControlName="pricePerNight" class="form-control" min="0" />
+            <input type="number" id="pricePerNight" [(ngModel)]="property.pricePerNight" name="pricePerNight" min="0" />
+            <div *ngIf="!property.pricePerNight" class="error-message">
+                Debes ingresar el valor por noche.
+            </div>
         </div>
 
         <!-- Botón de enviar -->
-        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-    </form>
-</div>
+        <div>
+            <button [disabled]="propertyForm.invalid" type="submit">Editar Propiedad</button>
+        </div>
+
+        <!-- Mensaje de error -->
+        
+    </div>
+</form>

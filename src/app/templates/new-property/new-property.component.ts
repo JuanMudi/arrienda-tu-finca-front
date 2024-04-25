@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { Municipality} from '../../models/municipality.model';
 import { Department } from '../../models/department.model';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -14,7 +13,7 @@ import { Router } from '@angular/router';
     standalone: true,
     selector: 'app-create-property',
     templateUrl: './new-property.component.html',
-    imports: [FormsModule, CommonModule, HttpClientModule],
+    imports: [FormsModule, CommonModule],
     styleUrls: ['./new-property.component.css']
 })
 export class NewPropertyComponent implements OnInit {
@@ -32,7 +31,8 @@ export class NewPropertyComponent implements OnInit {
         bbq: false,
         pricePerNight: 0,
         ownerID: window.sessionStorage.getItem('token') || '',
-        municipalityID: ''
+        municipalityName: '',
+        departmentName: ''
     };
 
     constructor(private propertyService: PropertyService, private router: Router ) { }
@@ -43,7 +43,10 @@ export class NewPropertyComponent implements OnInit {
 
     onDepartmentChange() {
         this.departments.subscribe(departments => {
+            console.log('Selected department:', this.selectedDepartment)
             const foundDept = departments.find(d => d.id === this.selectedDepartment);
+            console.log('foundDept', foundDept);
+
             if (foundDept) {
                 this.municipalities.next(foundDept.municipalities);
             } else {
@@ -54,6 +57,7 @@ export class NewPropertyComponent implements OnInit {
     
 
     createProperty() {
+        this.property.departmentName = this.selectedDepartment
         this.propertyService.createProperty(this.property).subscribe({
             next: (res) => console.log('Property created!', res),
             error: (err) => console.error('Error creating property', err)
