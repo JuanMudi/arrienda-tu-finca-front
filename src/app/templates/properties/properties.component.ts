@@ -15,6 +15,7 @@ import { Location } from '../../models/location.model';
   imports: [CommonModule]
 })
 export class PropertiesComponent {
+
   properties: Property[] = [];
   loadingDepartment: boolean = false;
   loadingMunicipality: boolean = false;
@@ -64,4 +65,8 @@ export class PropertiesComponent {
     sessionStorage.setItem('propertyID', propertyId);
     this.router.navigate(['/edit-property']);
   }
+
+  deactivate(property: string) {
+    //Logica para desactivar propiedad
+    }
 }

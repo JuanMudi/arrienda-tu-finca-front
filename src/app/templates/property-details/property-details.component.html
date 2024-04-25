@@ -1,1 +1,70 @@
-<p>property-details works!</p>
+<div>
+    <h2>Detalles de la Propiedad</h2>
+
+    <!-- Visualización de nombre -->
+    <div>
+        <label>Nombre:</label>
+        <div>{{ property.name }}</div>
+    </div>
+
+    <!-- Visualización de departamento -->
+    <div>
+        <label>Departamento:</label>
+        <div>{{ property.department }}</div>
+    </div>
+
+    <!-- Visualización de municipio -->
+    <div>
+        <label>Municipio:</label>
+        <div>{{ property.municipalityName }}</div>
+    </div>
+
+    <!-- Visualización de tipo de acceso -->
+    <div>
+        <label>Tipo de ingreso:</label>
+        <div>{{ property.accessType}}</div>
+    </div>
+
+    <!-- Visualización de descripción -->
+    <div>
+        <label>Descripción:</label>
+        <div>{{ property.description }}</div>
+    </div>
+
+    <!-- Visualización de cantidad de habitaciones -->
+    <div>
+        <label>Cantidad de habitaciones:</label>
+        <div>{{ property.rooms }}</div>
+    </div>
+
+    <!-- Visualización de cantidad de baños -->
+    <div>
+        <label>Cantidad de baños:</label>
+        <div>{{ property.bathrooms }}</div>
+    </div>
+
+    <!-- Visualización de permitir mascotas -->
+    <div>
+        <label>Permite mascotas:</label>
+        <div>{{ property.petFriendly ? 'Sí' : 'No' }}</div>
+    </div>
+
+    <!-- Visualización de piscina -->
+    <div>
+        <label>Tiene piscina:</label>
+        <div>{{ property.pool ? 'Sí' : 'No' }}</div>
+    </div>
+
+    <!-- Visualización de asador -->
+    <div>
+        <label>Tiene asador:</label>
+        <div>{{ property.bbq ? 'Sí' : 'No' }}</div>
+    </div>
+
+    <!-- Visualización de valor por noche -->
+    <div>
+        <label>Valor por noche:</label>
+        <div>{{ property.pricePerNight }}</div>
+    </div>
+
+</div>
