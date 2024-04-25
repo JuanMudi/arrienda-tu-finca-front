@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "arriendaTuFinca": {
+    "landmates": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/arrienda-tu-finca",
+            "outputPath": "dist/landmates",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -26,35 +26,29 @@
             ],
             "styles": [
               "src/styles.css",
-              "src/app/templates/assets/bootstrap/css/bootstrap.min.css",
-              "src/app/templates/assets/css/Inter.css",
-              "src/app/templates/assets/css/aos.min.css"           
+              "src/assets/bootstrap/css/bootstrap.min.css",
+              "src/assets/css/Inter.css",
+              "src/assets/css/aos.min.css"
             ],
             "scripts": [
-              "src/app/templates/assets/bootstrap/js/bootstrap.min.js",
-              "src/app/templates/assets/js/aos.min.js",
-              "src/app/templates/assets/js/bs-init.js",
-              "src/app/templates/assets/js/bold-and-dark.js"
-
-            ],
-            "server": "src/main.server.ts",
-            "prerender": true,
-            "ssr": {
-              "entry": "server.ts"
-            }
+              "src/assets/bootstrap/js/bootstrap.min.js",
+              "src/assets/js/aos.min.js",
+              "src/assets/js/bs-init.js",
+              "src/assets/js/bold-and-dark.js"
+            ]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
+                  "maximumWarning": "1mb",
                   "maximumError": "1mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "1mb",
+                  "maximumError": "1mb"
                 }
               ],
               "outputHashing": "all"
@@ -71,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "arriendaTuFinca:build:production"
+              "buildTarget": "landmates:build:production"
             },
             "development": {
-              "buildTarget": "arriendaTuFinca:build:development"
+              "buildTarget": "landmates:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -82,7 +76,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "arriendaTuFinca:build"
+            "buildTarget": "landmates:build"
           }
         },
         "test": {
@@ -94,19 +88,23 @@
             ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "src/styles.css",
+              "src/assets/bootstrap/css/bootstrap.min.css",
+              "src/assets/css/Inter.css",
+              "src/assets/css/aos.min.css"
             ],
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/bootstrap/js/bootstrap.min.js",
+              "src/assets/js/aos.min.js",
+              "src/assets/js/bs-init.js",
+              "src/assets/js/bold-and-dark.js"
+            ]
           }
         }
       }
     }
-  },
-  "cli": {
-    "analytics": false
   }
 }
